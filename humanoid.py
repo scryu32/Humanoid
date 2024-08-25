@@ -3,7 +3,6 @@ import time
 import math
 
 
-#휴머노이드의 몸을 제작하고, 몸을 움직이는 코드
 class Humanoid:
     def __init__(self):
         self.head_radius = 0.1
@@ -41,7 +40,9 @@ class Humanoid:
     def move_joint(self, joint_name, target_angle, duration):
         start_angle = self.current_angles[joint_name]
         end_angle = start_angle + target_angle
+
         steps = 50
+        step_duration = duration / steps
 
         for i in range(steps):
             angle = start_angle + (target_angle * (i / steps))
@@ -57,10 +58,10 @@ class Humanoid:
             elif joint_name == 'right_leg':
                 self.right_leg.axis = vector(-0.1 * math.cos(angle), -self.leg_length * math.cos(angle), self.leg_length * math.sin(angle))
                 self.right_leg.pos = self.body.pos + vector(0, -self.body_length, 0)
-            rate(50)
+            rate(1 / step_duration) 
 
         self.current_angles[joint_name] = end_angle
-        time.sleep(duration)
+
 
     def reset_position(self):
         self.left_arm.pos = self.body.pos + vector(0, -self.body_length / 2 + self.head_radius * 0.2, 0)
