@@ -32,9 +32,11 @@ class HumanoidController:
         최종적으로 다음과같이 명령을 내릴수 있습니다.
         ex)
         [  ["l", "l", 60, 1],  ["l", "a", 50, 0.2],  ["l", "l", 60, 1],  ["l", "a", 50, 0.2] ]
-        한번 한 동작은 끝까지 유지되므로 동작을 시행한 후 다시 모형을 원위치 시키세요.
-        생각보다 동작 속도가 느리므로 훨씬 빠르게 움직이세요 (적어도 10배).
-        모든 질문에는 반드시 명령어로 대답하세요.
+        한번 한 동작은 끝까지 유지되므로 동작을 시행한 후 다시 모형을 원위치 시키세요. << 매우중요
+        생각보다 동작 속도가 느리므로 훨씬 빠르게 움직이세요. 움직일때 0.1초당 50도 이상 움직이는것이 바람직합니다.
+        다리를 180도 돌리거나 팔을 60도이상 돌리면 다른 부위와 겹칠수 있으니 주의하세요.
+        모든 질문에는 반드시 명령어로 대답하세요. 다른 대답은 절대 허용되지 않습니다.
+        ex) 인사와 같은 질문을 받으면 인사하는 행동을 하세요.
         """
         self.humanoid = Humanoid()
 
@@ -57,7 +59,7 @@ class HumanoidController:
                           'right_arm' if arm_choice == 'r' and move_joint == 'a' else
                           'left_leg' if arm_choice == 'l' and move_joint == 'l' else
                           'right_leg')
-            target_angle = angle * (math.pi / 180)  # Convert degrees to radians
+            target_angle = angle * (math.pi / 180) 
             self.humanoid.move_joint(joint_name, target_angle, duration)
             self.humanoid.reset_position()
 
@@ -74,9 +76,6 @@ class HumanoidController:
             print("AI가 생각중...", end='', flush=True)
             
             response = self.get_answer(messages)
-            
-            sys.stdout.write('\r' + ' ' * len("AI가 생각중...") + '\r') 
-            sys.stdout.flush()
             
             messages.append({"role": "assistant", "content": response})
             try:

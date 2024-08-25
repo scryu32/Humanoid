@@ -2,6 +2,8 @@ from vpython import *
 import time
 import math
 
+
+#휴머노이드의 몸을 제작하고, 몸을 움직이는 코드
 class Humanoid:
     def __init__(self):
         self.head_radius = 0.1
@@ -9,7 +11,6 @@ class Humanoid:
         self.arm_length = 0.3
         self.leg_length = 0.4
 
-        # Initialize the body parts
         self.head = sphere(pos=vector(0, self.body_length + self.head_radius * 1.5, 0),
                            radius=self.head_radius, color=color.yellow)
         self.body = cylinder(pos=vector(0, self.head.pos.y - self.head_radius, 0),
@@ -30,7 +31,6 @@ class Humanoid:
                                   axis=vector(-0.1, -self.leg_length, 0),
                                   radius=0.02, color=color.green)
 
-        # Store current joint angles
         self.current_angles = {
             'left_arm': 0,
             'right_arm': 0,
@@ -63,7 +63,6 @@ class Humanoid:
         time.sleep(duration)
 
     def reset_position(self):
-        # Reset the positions of arms and legs to follow the body
         self.left_arm.pos = self.body.pos + vector(0, -self.body_length / 2 + self.head_radius * 0.2, 0)
         self.right_arm.pos = self.body.pos + vector(0, -self.body_length / 2 + self.head_radius * 0.2, 0)
         self.left_leg.pos = self.body.pos + vector(0, -self.body_length, 0)
